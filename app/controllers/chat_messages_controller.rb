@@ -1,8 +1,10 @@
 class ChatMessagesController < ApplicationController
   def create
-    if params[:chat_message][:chat_session_id].present?
+    @chat_message = ChatMessage.new(params.expect(chat_message: [:chat_session_id, :role, :content]))
+    if @chat_message.save
+      # TODO
     else
-      # chat_session = ChatSession.new
+      # TODO
     end
   end
 end
