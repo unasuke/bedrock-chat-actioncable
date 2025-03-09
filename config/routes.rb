@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get "chats", to: "chats#index"
-  get "chats/:id", to: "chats#show"
-
+  resources :chats, only: [:index, :show, :create]
   resources :chat_messages, only: [:create]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
