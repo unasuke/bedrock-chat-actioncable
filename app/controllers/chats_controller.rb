@@ -12,6 +12,7 @@ class ChatsController < ApplicationController
     @chat_session = ChatSession.new(title: params[:initial_message], bedrock_session_id: "")
     chat_message = @chat_session.chat_messages.new(role: "user", content: params[:initial_message])
     if @chat_session.save
+      RetrieveAnswerFromAgentJob.set(wait: 2.seconds).perform_later(chat_message.id)
       redirect_to chat_path(@chat_session)
     else
       redirect_to chats_path

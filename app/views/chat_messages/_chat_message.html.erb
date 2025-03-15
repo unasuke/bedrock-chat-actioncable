@@ -1,6 +1,6 @@
 <%= turbo_frame_tag chat_message do %>
-  <p>
-    <span><%= chat_message.role %></span>
-    <span><%= chat_message.content %></span>
+  <p class="bg-indigo-200 rounded-md p-2 mb-4">
+    <span><%= chat_message.role %>:</span>
+    <span class="whitespace-pre-line"><%= chat_message.content %></span>
   </p>
 <% end %>

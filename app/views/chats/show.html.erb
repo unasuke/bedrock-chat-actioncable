@@ -32,16 +32,24 @@
 
 
   <main class="py-10 lg:pl-72">
-    <div class="px-4 sm:px-6 lg:px-8">
+    <div class="px-4 sm:px-6 lg:px-8" data-controller="chat-session" data-chat-session-chat-session-id-value="<%= @chat_session.id %>">
       <div>
-        <%= turbo_frame_tag "chat_messages" do %>
+        <%= turbo_frame_tag "chat_messages", data: { "chat-session-target": "chatMessages" } do %>
           <%= render @chat_session.chat_messages %>
+          <template id="chat_message_template">
+            <turbo-frame>
+              <p class="bg-indigo-200 rounded-md p-2 mb-4 text-gray-600">
+                <span data-template="role"></span>
+                <span data-template="content" class="whitespace-pre-line"></span>
+              </p>
+            </turbo-frame>
+          </template>
         <% end %>
       </div>
-      <%= form_with model: ChatMessage.new, url: chat_messages_path, method: :post, data: { turbo_frame: "chat_messages" } do |f| %>
+      <%= form_with model: ChatMessage.new, url: chat_messages_path, method: :post, data: { turbo_frame: "chat_messages", action: "turbo:submit-end->chat-session#messageSubmitted" } do |f| %>
         <%= f.hidden_field :chat_session_id, value: @chat_session.id %>
         <%= f.hidden_field :role, value: "user" %>
-        <%= f.text_field :content, class: "border-2 border-gray-300 rounded-md p-2" %>
+        <%= f.text_field :content, class: "border-2 border-gray-300 rounded-md p-2 w-100", data: { "chat-session-target": "messageContentInput" } %>
         <%= f.submit "Send", class: "bg-blue-500 text-white p-2 rounded-md" %>
       <% end %>
     </div>
