@@ -34,7 +34,7 @@
   <main class="py-10 lg:pl-72">
     <div class="px-4 sm:px-6 lg:px-8">
       <%= form_with url: chats_path, method: :post do |f| %>
-        <%= f.text_field :initial_message, class: "border-2 border-gray-300 rounded-md p-2" %>
+        <%= f.text_field :initial_message, class: "border-2 border-gray-300 rounded-md p-2 w-100" %>
         <%= f.submit "Send", class: "bg-blue-500 text-white p-2 rounded-md" %>
       <% end %>
     </div>
